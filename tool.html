@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>积木报表设计器</title>
+
+    <!-- Import via CDN -->
+    <link rel="stylesheet" href="./corelib/xspreadsheet.css">
+    <script src="./corelib/xspreadsheet.js"></script>
+    <script src="./corelib/locale/zh-cn.js"></script>
+    <script src="./demo_json.js"></script>
+
+<body onload="load()">
+    <div id="x-spreadsheet-demo"></div>
+    <script>
+        function load() {
+            const options = {
+                viewLocalImage: "/design/report/img",// 预览本地图片方法
+                uploadUrl: "/design/report/upload", // 统一上传地址
+                uploadExcelUrl: "/design/report/importExcel?token=",//上传excel方法
+                pageSize: [10, 20, 30], //分页条数
+                domain: window.location.origin,
+                showToolbar: true,     //头部操作按钮
+                showGrid: true,        //excel表格
+                showContextmenu: true, //右键操作按钮
+                view: {
+                    height: () => document.documentElement.clientHeight - 2,
+                    width: () => document.documentElement.clientWidth - 1
+                },
+                row: {
+                    len: 100,
+                    height: 25,
+                    minRowResizerHeight: 1 //拖拽行最小高度
+                },
+                col: {
+                    len: 26,
+                    width: 100,
+                    minWidth: 60,
+                    height: 0,
+                    minColResizerHeight: 1//拖拽列最小高度
+                },
+                style: {
+                    bgcolor: '#ffffff',
+                    align: 'left',
+                    valign: 'middle',
+                    textwrap: false,
+                    strike: false,
+                    underline: false,
+                    color: '#0a0a0a',
+                    font: {
+                        name: 'Microsoft YaHei',
+                        size: 10,
+                        bold: false,
+                        italic: false,
+                    },
+                },
+            }
+            x.spreadsheet.locale('zh-cn');
+            var xs = x.spreadsheet('#x-spreadsheet-demo', options)
+                .onSave(function (data) {
+                    
+                })
+                .onAddChart(function(a){
+                    xs.addChart(chartDemoData);
+                })
+                .onSelectChart(function(data){
+                    console.info('select----chart', data);
+                })
+                .onChartDelete(function(){
+                    console.info('delete----chart', data);
+                });
+        }
+    </script>
+</body>
+
+</html>
